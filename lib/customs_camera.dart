@@ -20,10 +20,12 @@ class _CustomsCameraPositionState extends State<CustomsCameraPosition> {
           29.054357700053103,
           31.156642102513437,
         ));
+    Markers();
     super.initState();
   }
 
   late GoogleMapController googleMapController;
+  Set<Marker> markers = {};
 
   @override
   void dispose() {
@@ -36,6 +38,7 @@ class _CustomsCameraPositionState extends State<CustomsCameraPosition> {
     return Stack(
       children: [
         GoogleMap(
+          markers: markers,
             //mapType: MapType.hybrid,
             onMapCreated: (controller) {
               googleMapController = controller;
@@ -62,6 +65,12 @@ class _CustomsCameraPositionState extends State<CustomsCameraPosition> {
     var nightStyle = await DefaultAssetBundle.of(context)
         .loadString("assets/map_style/map_style_night.json");
     googleMapController.setMapStyle(nightStyle);
+  }
+
+  void Markers() {
+    var myMarkers= Marker(markerId: MarkerId("1"),position: LatLng(31.072308396346227, 29.933525474820893));
+    markers.add(myMarkers);
+
   }
 }
 
