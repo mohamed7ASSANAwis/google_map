@@ -17,17 +17,19 @@ class _CustomsCameraPositionState extends State<CustomsCameraPosition> {
   @override
   void initState() {
     initialCameraPosition = CameraPosition(
-        zoom: 10,
+        zoom: 8,
         target: LatLng(
-          29.054357700053103,
-          31.156642102513437,
+            29.34044382696969, 31.207237982889264
         ));
     initMarkers();
+    initPolyLine();
+   // initPolyGonse();
     super.initState();
   }
 
   late GoogleMapController googleMapController;
   Set<Marker> markers = {};
+  Set<Polyline> polyLine = {};
 
   @override
   void dispose() {
@@ -51,6 +53,7 @@ class _CustomsCameraPositionState extends State<CustomsCameraPosition> {
     return Stack(
       children: [
         GoogleMap(
+          polylines: polyLine,
             markers: markers,
             //mapType: MapType.hybrid,
             onMapCreated: (controller) {
@@ -97,6 +100,39 @@ class _CustomsCameraPositionState extends State<CustomsCameraPosition> {
     markers.addAll(myMarkers);
     setState(() {});
   }
+
+  void initPolyLine() {
+    var polyline= Polyline(
+      visible: true,
+      endCap: Cap.roundCap,
+        startCap: Cap.roundCap,
+        width: 5,
+        geodesic: true,
+        zIndex: 5,
+        color: Colors.red,
+        polylineId: PolylineId("1"),
+    
+    points: [
+      LatLng(30.00809441992408, 31.236445320751628),
+      LatLng(29.34530526191757, 31.19633184021425),
+      LatLng(29.31912731024233, 30.840243604224472),
+    ]
+    );
+    var polyline1= Polyline(
+        zIndex: 1,
+        polylineId: PolylineId("2"),
+
+        points: [
+          LatLng(29.97787260473582, 30.718191971012264),
+          LatLng(28.9930620676505, 31.58073567737086),
+
+        ]
+    );
+    polyLine.add(polyline);
+    polyLine.add(polyline1);
+  }
+
+  // void initPolyGonse() {}
 }
 
 //zoom world view 0=>3
